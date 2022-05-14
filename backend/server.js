@@ -7,6 +7,20 @@ const port = process.env.PORT || 5000
 
 const app = express()
 
+const cors = require("cors")
+const whitelist = ["http://localhost:3000"]
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error("Not allowed by CORS"))
+    }
+  },
+  credentials: true,
+}
+app.use(cors(corsOptions))
+
 connectDB() 
 
 app.use(express.json())
@@ -17,4 +31,4 @@ app.use('/api/users', require('./routes/userRoutes'))
 
 app.use(errorHandler)
 
-app.listen(port, () => console.log(`Server started on ${port}`))
+app.listen(port, () => console.log(`Server started on ${port}`)) 

@@ -31,14 +31,14 @@ const updatePortfolio = asyncHandler(async (req, res) => {
         throw new Error('Portfolio not found')
     }
 
-    const user = await userModel.findById(req.user.id)
 
-    if(!user){
+
+    if(!req.user){
         res.status(401)
         throw new Error('user not found')
     }
 
-    if(portfolio.user.toString() !== user.id){
+    if(portfolio.user.toString() !== req.user.id){
         res.status(401)
         throw new Error('wrong user')
     }
@@ -55,14 +55,14 @@ const deletePortfolio = asyncHandler(async (req, res) => {
         throw new Error('Portfolio not found')
     }
 
-    const user = await userModel.findById(req.user.id)
 
-    if(!user){
+
+    if(!req.user){
         res.status(401)
         throw new Error('user not found')
     }
 
-    if(portfolio.user.toString() !== user.id){
+    if(portfolio.user.toString() !== req.user.id){
         res.status(401)
         throw new Error('wrong user')
     }
